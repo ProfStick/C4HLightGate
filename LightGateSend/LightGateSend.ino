@@ -1,33 +1,58 @@
 /*
-  LightGateSend
+  LightGate Send
 
-  Sends an unmodulated 38kHz IR signal using an IR LED attached to pin 3.
-  Used for a simple beam brake light gate
-  For higher radiant intensity try the TSAL6100
+  This sketch will create a 38kHz carrier from an IR LED
+  Code adapted from tutorial at http://www.ladyada.net/learn/sensors/ir.html
+  
+  
 
   The circuit:
-  * TSAL6200 IR LED   pin 3
-  * 
-  * note: IRremote library only allows pin 3 for send
-
+  * FEATHER 32u4
+  * TSAL6200 IR LED   powered by 3.3V out
+  * IR LED controlled by BC548B NPN transistor on pin 5
+  * 1k resistor between pin3 and transistor base
 
   Created 17 Apr 2017
   By Courses4Horses geoff.goldrick@gmail.com
   Modified day month year
   By author's name
 
-  
-
 */
-#include <IRremote.h>
 
-IRsend irsend;             //create an instance of IRsend
+const int IR_LED_PIN =  3;    // LED connected to digital pin 3
 
-void setup()
-{
-  irsend.enableIROut(38); //send signal at 38kHz
-  irsend.mark(0);         //don't really understand what this does
+// 38 kHz is about 13 microseconds high and 13 microseconds low
+// digitalWrite takes about 3 micros therefore delay time should be 10 micros
+const long INTERVAL = 10; //interval in micros at which to change LEd state
+unsigned long previousMicros = 0;
+int ledState = LOW;   //used to change the LED
+
+
+
+
+
+void setup() {
+  pinMode(IR_LED_PIN, OUTPUT);      
+  Serial.begin(9600);
 }
 
 void loop() {
+
+  //check to see if it is time to change the LED
+  unsigned long currentMicros = micros();
+
+  if (currentMicros - previousMicros >= INTERVAL) {
+    // save the last time you blinked the LED
+    previousMicros = currentMicros;
+    ledState = !ledState;
+
+    // set the LED with the ledState of the variable:
+    digitalWrite(IR_LED_PIN, ledState);
+  }
+
+  
+     
+     // so 26 microseconds altogether
+     // checked with multimeter
 }
+ 
