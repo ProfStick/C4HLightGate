@@ -20,6 +20,8 @@
 
   #include "Arduino.h"
 
+  #define BOARD feather_32u4 //replace with other options feather_nRF52
+
   #ifdef DEBUG
     #define DEBUG_PRINTLN(x)  Serial.println(x)
     #define DEBUG_PRINT(x)  Serial.print(x)
@@ -28,41 +30,42 @@
     #define DEBUG_PRINT(x)
   #endif
   
-  #define FEATHER32u4 //replace with other options FEATHERnRF52
-  
-  //define the pin for checking the battery level
-  #ifdef FEATHER32u4
+  //define the pin for checking the battery level on feathers
+  #if BOARD == feather_32u4
     #define BATPIN A9
-  #ifdef FEATHERnRF52
+  #elif BOARD == feather_nRF52
     #define BATPIN A7
+  #endif
 
 
   class Transmitter
   {
     public:
-    Transmitter(int a, String b); 
-    void doSomething();
+      Transmitter(); 
+      void batteryLevel();
     private:
-    int _a;
-    String _b;
+      int _id;
   };
 
-    class NewClass
+  class NewClass
   {
     public:
-    NewClass(int a, String b); 
-    void doSomething();
+      NewClass(int a, String b); 
+      void doSomething();
     private:
-    int _a;
-    String _b;
+      int _a;
+      String _b;
   };
-  
+
+/*  
   //some general functions
-  float batteryLevel(){
-    int raw = analogRead(VBATPIN);
+  void batLevel(){
+    int raw = analogRead(BATPIN);
     raw *= 2;    // double-100K resistor divider on the BAT pin so mult by 2
-    float voltage *= 3.3/1024;  // Multiply by reference voltage (3.3V) and divide by range (1024)
-    return voltage;
+    float voltage = raw*3.3/1024;  // Multiply by reference voltage (3.3V) and divide by range (1024)
+    Serial.println(voltage);
+    //return voltage;
   }
+*/  
 #endif //#ifndef LightGate_h
 

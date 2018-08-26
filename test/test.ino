@@ -16,12 +16,13 @@
 **********************************************************************/
 
 // next the include statements
-#include "Template.h"
+#include "LightGate.h"
 
 //boolean for debugging purposes. Set to true for verbose output while debugging
 bool debug = true;
 
-NewClass newClass(1,"Hello");
+//NewClass newClass(1,"Hello");
+Transmitter trans1;
 
 void setup() {
   Serial.begin(9600); //open the serial port for debugging
@@ -36,7 +37,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  newClass.doSomething();
+  //newClass.doSomething();
+  //  batLevel();
+  trans1.batteryLevel();
+  
   delay(1000);
 }
 
