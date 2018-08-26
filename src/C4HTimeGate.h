@@ -15,8 +15,8 @@
   license CC BY-SA 3.0 AU https://creativecommons.org/licenses/by-sa/3.0/au/
 **********************************************************************/
 
-#ifndef LightGate_h
-  #define LightGate_h
+#ifndef C4HTimeGate_h
+  #define C4HTimeGate_h
 
   #include "Arduino.h"
 
@@ -38,13 +38,22 @@
   #endif
 
 
-  class Transmitter
+  class Feather
   {
     public:
-      Transmitter(); 
-      void batteryLevel();
+      Feather(); 
+      int batteryLevel();
     private:
-      int _id;
+  };
+
+  class Transmitter : public Feather
+  {
+    public:
+      Transmitter(byte id);
+      byte getID();
+      void printBatteryLevel();
+    private:
+      byte _id;
   };
 
   class NewClass
@@ -57,15 +66,5 @@
       String _b;
   };
 
-/*  
-  //some general functions
-  void batLevel(){
-    int raw = analogRead(BATPIN);
-    raw *= 2;    // double-100K resistor divider on the BAT pin so mult by 2
-    float voltage = raw*3.3/1024;  // Multiply by reference voltage (3.3V) and divide by range (1024)
-    Serial.println(voltage);
-    //return voltage;
-  }
-*/  
-#endif //#ifndef LightGate_h
+#endif //#ifndef C4HTimeGate_h
 

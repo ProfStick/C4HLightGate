@@ -15,10 +15,12 @@
   license CC BY-SA 3.0 AU https://creativecommons.org/licenses/by-sa/3.0/au/
 **********************************************************************/
 
-#ifndef LightGate_h
-  #define LightGate_h
+#ifndef C4HTimeGate_h
+  #define C4HTimeGate_h
 
   #include "Arduino.h"
+
+  #define BOARD feather_32u4 //replace with other options feather_nRF52
 
   #ifdef DEBUG
     #define DEBUG_PRINTLN(x)  Serial.println(x)
@@ -28,41 +30,41 @@
     #define DEBUG_PRINT(x)
   #endif
   
-  #define FEATHER32u4 //replace with other options FEATHERnRF52
-  
-  //define the pin for checking the battery level
-  #ifdef FEATHER32u4
+  //define the pin for checking the battery level on feathers
+  #if BOARD == feather_32u4
     #define BATPIN A9
-  #ifdef FEATHERnRF52
+  #elif BOARD == feather_nRF52
     #define BATPIN A7
+  #endif
 
 
-  class Transmitter
+  class Feather
   {
     public:
-    Transmitter(int a, String b); 
-    void doSomething();
+      Feather(); 
+      int batteryLevel();
     private:
-    int _a;
-    String _b;
   };
 
-    class NewClass
+  class Transmitter : public Feather
   {
     public:
-    NewClass(int a, String b); 
-    void doSomething();
+      Transmitter(byte id);
+      byte getID();
+      void printBatteryLevel();
     private:
-    int _a;
-    String _b;
+      byte _id;
   };
-  
-  //some general functions
-  float batteryLevel(){
-    int raw = analogRead(VBATPIN);
-    raw *= 2;    // double-100K resistor divider on the BAT pin so mult by 2
-    float voltage *= 3.3/1024;  // Multiply by reference voltage (3.3V) and divide by range (1024)
-    return voltage;
-  }
-#endif //#ifndef LightGate_h
+
+  class NewClass
+  {
+    public:
+      NewClass(int a, String b); 
+      void doSomething();
+    private:
+      int _a;
+      String _b;
+  };
+
+#endif //#ifndef C4HTimeGate_h
 

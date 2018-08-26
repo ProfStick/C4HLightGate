@@ -1,0 +1,25 @@
+#######################################
+# Syntax Coloring Map For Library
+# need to use tabs not spaces
+#######################################
+
+#######################################
+# Datatypes including classes(KEYWORD1) 
+#######################################
+
+Feather		KEYWORD1
+Transmitter	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+batteryLevel	KEYWORD2
+getID	KEYWORD2
+printBatteryLevel	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+BOARD	LITERAL1
+BATPIN	LITERAL1
